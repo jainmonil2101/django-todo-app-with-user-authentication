@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="header-bar">
+    {% if "create" in request.path %}
+    <p style="font-size: 3rem;line-height: 0;color: whitesmoke;">Add New Task</p>
+    {% else %}
+    <p style="font-size: 3rem;line-height: 0;color: whitesmoke;">Update {{task}}</p>
+    {% endif %}
+</div>
+
+<div class="card-body">
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        {{form.as_p}}
+
+        {% if "create" in request.path %}
+        <input type="submit" class="button" value="Add Task">
+        {% else %}
+        <input type="submit" class="button" value="Update">
+        {% endif %}
+    </form>
+</div>
+{% endblock content %}

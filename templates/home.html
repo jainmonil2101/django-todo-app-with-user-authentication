@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="header-bar">
+    <div>
+        <h1 style="font-size: 3.5rem;margin-bottom: 0 !important;">Hello {{request.user|title}}</h1>
+        <h3 style="margin-top: 5px !important;">You have <i>{{task_count}}</i> incomplete task{{task_count|pluralize}}
+        </h3>
+    </div>
+
+
+
+    <div>
+        {% if request.user.is_authenticated %}
+
+        <a id="a" href="{% url 'logout' %}">Logout</a>
+
+        {% endif %}
+    </div>
+</div>
+
+<div class="search-add-wrapper">
+    <form method="GET" style="display: flex;">
+        <input type="text" name="search_query" value="{{search_query}}" style="margin-right: 5px;">
+        <input type="submit" value="Search" class="button">
+    </form>
+    <a class="add-link" href="{% url 'create' %}">&plus;</a>
+</div>
+
+
+
+
+<div class="tasks-item-wrapper">
+    {% for task in search_result %}
+
+    {% if task.complete %}
+    <div class="tasks-item">
+        <div class="task-title">
+            <a href="{% url 'incomplete' task.id %}">
+                <div id="complete-icon">
+
+                </div>
+            </a>
+            <i><s><a id="ml-20" href="{% url 'update' task.id %}">{{task|title}}</a></s></i>
+        </div>
+        <a class="delete-link" href="{% url 'delete' task.id %}">&#215;
+        </a>
+    </div>
+    {% else %}
+    <div class="tasks-item">
+        <div class="task-title">
+            <a href="{% url 'complete' task.id %}">
+                <div id="incomplete-icon">
+
+                </div>
+            </a>
+            <a id="ml-20" href="{% url 'update' task.id %}">{{task|title}}</a>
+        </div>
+
+        <a class="delete-link" href="{% url 'delete' task.id %}">&#215;
+        </a>
+    </div>
+    {% endif %}
+
+    {% empty %}
+
+
+
+    {%if "search_query" in request.get_full_path %}
+
+    <a href="{% url 'home' %}" style="color: rgb(0, 190, 228);padding: 5px;font-weight: bold;"> &#8592; Go Back</a>
+    <h3 style="font-size: 30px;margin: auto;color: rgb(0, 190, 228);padding: 20px;text-align: center;">No items found!</h3>
+
+    {% else %}
+
+    <h3 style="font-size: 30px;margin: auto;color: rgb(0, 190, 228);padding: 20px;text-align: center;">No items in this
+        list!</h3>
+
+    {% endif %}
+
+
+
+    {% endfor %}
+</div>
+
+
+
+
+
+{% endblock content %}

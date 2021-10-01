@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+
+<div class="header-bar">
+    <p style="font-size: 3rem;line-height: 0;color: whitesmoke;">Register</p>
+</div>
+{% if error %}
+
+<div class="alert">
+    <strong>{{error}}</strong>
+    <strong class="closebtn" onclick="this.parentElement.style.display='none';"> &times;</strong>
+</div>
+
+{% endif %}
+
+<div class="card-body">
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        <label>{{form.username.label}}</label>
+        {{form.username}}
+
+        <label>{{form.password1.label}}</label>
+        {{form.password1}}
+
+        <label>Confirm Password</label>
+        {{form.password2}}
+
+
+        <input type="submit" class="button" style="margin-top: 10px;" value="Register">
+    </form>
+
+    <p>Already have an account? <a href="{% url 'login' %}" style="color: rgba(30, 144, 255, 1);">Login</a>
+    </p>
+</div>
+{% endblock content %}
